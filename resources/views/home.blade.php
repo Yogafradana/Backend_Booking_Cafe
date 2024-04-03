@@ -43,7 +43,15 @@
                 <td>
                     <img src="{{ asset('images/' . $menu->gambar) }}" alt="{{ $menu->nama_menu }}" width="100">
                 </td>
-                <td><a href="{{ route('menus.edit', $menu->menu_id) }}">Edit</a></td>
+                <td>
+                    <a href="{{ route('menus.edit', $menu->menu_id) }}">Edit</a>
+                    <form action="{{ route('menus.destroy', $menu->menu_id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
             </tr>
             @endforeach
         </tbody>

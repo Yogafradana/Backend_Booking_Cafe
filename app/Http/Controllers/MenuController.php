@@ -82,7 +82,7 @@ class MenuController extends Controller
     {
         $menu->delete();
 
-        return redirect()->route('menus.index')
+        return redirect()->route('home')
                          ->with('success','Menu deleted successfully');
     }
 }
