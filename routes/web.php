@@ -16,3 +16,10 @@ use App\Http\Controllers\HomeController;
 
 Route::get('/', [HomeController::class, 'index']);
 
+// route tambah menu
+use App\Http\Controllers\MenuController;
+Route::get('/menus/create', [MenuController::class, 'create'])->name('menus.create');
+Route::post('/menus', [MenuController::class, 'store'])->name('menus.store');
+
+
+

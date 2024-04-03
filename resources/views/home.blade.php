@@ -21,6 +21,7 @@
 </head>
 <body>
     <h1>Daftar Menu</h1>
+    <a href="{{ route('menus.create') }}" style="margin-bottom: 10px; display: inline-block;">Tambah Menu</a>
     <table>
         <thead>
             <tr>
@@ -29,6 +30,7 @@
                 <th>Deskripsi</th>
                 <th>Harga</th>
                 <th>Gambar</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -39,7 +41,7 @@
                 <td>{{ $menu->deskripsi }}</td>
                 <td>Rp {{ $menu->harga }}</td>
                 <td>
-                    <img src="{{ asset('path_to_your_image_folder/' . $menu->gambar) }}" alt="{{ $menu->nama_menu }}" width="100">
+                    <img src="{{ asset('images/' . $menu->gambar) }}" alt="{{ $menu->nama_menu }}" width="100">
                 </td>
             </tr>
             @endforeach
