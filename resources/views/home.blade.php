@@ -43,6 +43,7 @@
                 <td>
                     <img src="{{ asset('images/' . $menu->gambar) }}" alt="{{ $menu->nama_menu }}" width="100">
                 </td>
+                <td><a href="{{ route('menus.edit', $menu->menu_id) }}">Edit</a></td>
             </tr>
             @endforeach
         </tbody>
