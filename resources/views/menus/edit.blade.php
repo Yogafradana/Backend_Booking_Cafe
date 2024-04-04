@@ -27,9 +27,13 @@
             <input type="text" id="nama_menu" name="nama_menu" value="{{ old('nama_menu', $menu->nama_menu) }}">
         </div>
 
-        <div>
-            <label for="kategori">Kategori:</label>
-            <input type="text" id="kategori" name="kategori" value="{{ old('kategori', $menu->kategori) }}">
+        <div class="form-group">
+        <label for="id_kategori">Kategori:</label>
+        <select class="form-control" id="id_kategori" name="id_kategori" required>
+            @foreach($categories as $category)
+                <option value="{{ $category->id_kategori }}">{{ $category->nama_kategori }}</option>
+            @endforeach
+        </select>
         </div>
 
         <div>

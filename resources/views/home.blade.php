@@ -20,6 +20,7 @@
     </style>
 </head>
 <body>
+    
     <h1>Daftar Menu</h1>
     <a href="{{ route('menus.create') }}" style="margin-bottom: 10px; display: inline-block;">Tambah Menu</a>
     <table>
@@ -37,7 +38,13 @@
             @foreach($menus as $menu)
             <tr>
                 <td>{{ $menu->nama_menu }}</td>
-                <td>{{ $menu->kategori }}</td>
+                <td>
+                    @if ($menu->kategori)
+                        {{ $menu->kategori->nama_kategori }}
+                    @else
+                        Kategori tidak ditemukan
+                    @endif
+                </td>
                 <td>{{ $menu->deskripsi }}</td>
                 <td>Rp {{ $menu->harga }}</td>
                 <td>

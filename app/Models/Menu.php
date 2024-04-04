@@ -15,5 +15,14 @@ class Menu extends Model
 
     protected $table = 'Menu';
 
-    protected $fillable = ['nama_menu', 'deskripsi', 'kategori', 'harga', 'gambar'];
+    protected $fillable = ['nama_menu', 'deskripsi', 'id_kategori', 'harga', 'gambar'];
+
+    // Relasi dengan Kategori
+    public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'id_kategori');
+    }
 }
+
+
+
