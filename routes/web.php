@@ -29,4 +29,19 @@ Route::put('/menus/{menu}', [MenuController::class, 'update'])->name('menus.upda
 // route delete data menu
 Route::delete('/menus/{menu}', [MenuController::class, 'destroy'])->name('menus.destroy');
 
+//untuk menampilkan kategori
+use App\Http\Controllers\KategoriController;
+
+Route::get('/kategori', [KategoriController::class, 'index']);
+
+//untuk tambah data kategori 
+Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
+Route::post('/kategori', [KategoriController::class, 'store'])->name('kategori.store');
+
+//untuk edit atau update data kategori
+Route::get('/kategori/{id_kategori}/edit', [KategoriController::class, 'edit'])->name('kategori.edit');
+Route::put('/kategori/{id_kategori}', [KategoriController::class, 'update'])->name('kategori.update');
+
+//untuk menghapus data kategori
+Route::delete('/kategori/{id_kategori}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
 

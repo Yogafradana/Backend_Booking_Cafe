@@ -19,6 +19,30 @@
         }
     </style>
 </head>
+<nav>
+        <!-- Tombol Logout -->
+    <ul>
+        <li class="nav-item dropdown">
+            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                {{ Auth::user()->name }}
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+            </div>
+            <!-- Tambahkan link menuju halaman kategori -->
+    <a href="{{ url('/kategori') }}">Lihat Kategori</a>
+        </li>
+    </ul>
+    </nav>
 <body>
     
     <h1>Daftar Menu</h1>

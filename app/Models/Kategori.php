@@ -8,6 +8,8 @@ class Kategori extends Model
 {
     protected $table = 'kategori'; // Nama tabel sesuai dengan nama tabel di database
     protected $primaryKey = 'id_kategori'; // Primary key dari tabel
+    public $timestamps = false;
+    protected $fillable = ['nama_kategori', 'image', 'keterangan'];
 
     // Relasi dengan Menu
     public function menus()
@@ -15,9 +17,5 @@ class Kategori extends Model
         return $this->hasMany(Menu::class, 'id_kategori');
     }
 
-    public function create()
-    {
-        $categories = Kategori::all(); // Mengambil semua kategori
-        return view('menus.create', compact('categories'));
-    }
+    
 }
