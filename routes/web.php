@@ -10,6 +10,8 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+//==============================================================================================================//
+
 // route menu
 
 use App\Http\Controllers\HomeController;
@@ -29,6 +31,8 @@ Route::put('/menus/{menu}', [MenuController::class, 'update'])->name('menus.upda
 // route delete data menu
 Route::delete('/menus/{menu}', [MenuController::class, 'destroy'])->name('menus.destroy');
 
+//==============================================================================================================//
+
 //untuk menampilkan kategori
 use App\Http\Controllers\KategoriController;
 
@@ -44,4 +48,24 @@ Route::put('/kategori/{id_kategori}', [KategoriController::class, 'update'])->na
 
 //untuk menghapus data kategori
 Route::delete('/kategori/{id_kategori}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
+
+//==============================================================================================================//
+
+//untuk menampilkan meja
+use App\Http\Controllers\MejaController;
+
+Route::get('/meja', [MejaController::class, 'index']);
+//untuk keperluan tautan
+Route::get('/meja', [MejaController::class, 'index'])->name('meja.index');
+
+//tambah data meja
+Route::get('/meja/create', [MejaController::class, 'create'])->name('meja.create');
+Route::post('/meja', [MejaController::class, 'store'])->name('meja.store');
+
+// edit data meja
+Route::get('/meja/{meja}/edit', [MejaController::class, 'edit'])->name('meja.edit');
+Route::put('/meja/{meja}', [MejaController::class, 'update'])->name('meja.update');
+
+//delete data meja
+Route::delete('/meja/{meja_id}', [MejaController::class, 'destroy'])->name('meja.destroy');
 

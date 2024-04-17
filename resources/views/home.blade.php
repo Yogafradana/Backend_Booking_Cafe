@@ -40,6 +40,7 @@
             </div>
             <!-- Tambahkan link menuju halaman kategori -->
     <a href="{{ url('/kategori') }}">Lihat Kategori</a>
+    <a href="{{ route('meja.index') }}">Lihat Data Meja</a>
         </li>
     </ul>
     </nav>
