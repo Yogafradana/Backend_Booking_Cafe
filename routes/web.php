@@ -69,3 +69,23 @@ Route::put('/meja/{meja}', [MejaController::class, 'update'])->name('meja.update
 //delete data meja
 Route::delete('/meja/{meja_id}', [MejaController::class, 'destroy'])->name('meja.destroy');
 
+//==============================================================================================================//
+
+//menampilkan data admin atau user
+use App\Http\Controllers\UserController;
+
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+
+//untuk tambah data users
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+
+//untuk edit data users
+Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+
+//untuk delete data
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+
+

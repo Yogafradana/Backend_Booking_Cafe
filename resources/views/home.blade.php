@@ -39,8 +39,9 @@
                 </form>
             </div>
             <!-- Tambahkan link menuju halaman kategori -->
-    <a href="{{ url('/kategori') }}">Lihat Kategori</a>
-    <a href="{{ route('meja.index') }}">Lihat Data Meja</a>
+    <a href="{{ url('/kategori') }}">Lihat Kategori</a></br>
+    <a href="{{ route('meja.index') }}">Lihat Data Meja</a></br>
+    <li><a href="{{ route('users.index') }}">Users</a></li>
         </li>
     </ul>
     </nav>
