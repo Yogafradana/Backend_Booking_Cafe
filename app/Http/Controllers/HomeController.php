@@ -23,14 +23,4 @@ class HomeController extends Controller
         $menus = Menu::all();
         return view('home', compact('menus'));
     }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    // public function index()
-    // {
-    //     return view('home');
-    // }
 }

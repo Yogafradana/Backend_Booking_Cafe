@@ -13,15 +13,22 @@ class MenuController extends Controller
     {
         // Menggunakan Eloquent untuk ambil data Menu
         $menus = Menu::join('kategori', 'menu.id_kategori', '=', 'kategori.id_kategori')
-            ->select('menu.nama_menu', 'kategori.nama_kategori as kategori', 'menu.deskripsi', 'menu.harga', 'menu.gambar')
+            ->select('menu.nama_menu', 'kategori.nama_kategori as kategori', 'menu.deskripsi', 'menu.harga', 'menu.gambar', 'menu.stok')
             ->get();
 
         // Jika Anda juga perlu semua data Kategori, Anda bisa ambil dengan Eloquent
         $categories = Kategori::all();
+        $menus = Menu::all();
 
         // Kirimkan data ke view
-        return view('home', compact('menus', 'categories'));
+        return view('menus.index', compact('menus', 'categories'));
     }
+
+    // public function index2()
+    // {
+    //     $menus = Menu::all();
+    //     return view('menus.index', compact('menus'));
+    // }
 
     public function create()
     {
@@ -37,6 +44,7 @@ class MenuController extends Controller
             'deskripsi' => 'required',
             'harga' => 'required|numeric',
             'gambar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'stok' => 'required',
         ]);
 
         // Simpan data menu baru
@@ -45,6 +53,7 @@ class MenuController extends Controller
         $menu->id_kategori = $request->id_kategori;
         $menu->deskripsi = $request->deskripsi;
         $menu->harga = $request->harga;
+        $menu->stok = $request->stok;
 
         // Upload dan simpan gambar jika ada
         if ($request->hasFile('gambar')) {
@@ -56,7 +65,7 @@ class MenuController extends Controller
 
         $menu->save();
 
-        return redirect()->route('home')->with('success', 'Menu berhasil ditambahkan');
+        return redirect()->route('menus.index')->with('success', 'Menu berhasil ditambahkan');
     }
 
     //controller edit data menu
@@ -73,6 +82,7 @@ class MenuController extends Controller
         'deskripsi' => 'required',
         'harga' => 'required|numeric',
         'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+        'stok' => 'required',
     ]);
 
     // Upload gambar jika ada
@@ -90,9 +100,10 @@ class MenuController extends Controller
     $menu->deskripsi = $request->deskripsi;
     $menu->harga = $request->harga;
     $menu->gambar = $nama_gambar;
+    $menu->stok = $request->stok;
     $menu->save();
 
-    return redirect()->route('home')->with('success', 'Menu berhasil diperbarui');
+    return redirect()->route('menus.index')->with('success', 'Menu berhasil diperbarui');
 }
 
     // controller delete data menu
@@ -100,7 +111,7 @@ class MenuController extends Controller
     {
         $menu->delete();
 
-        return redirect()->route('home')
+        return redirect()->route('menus.index')
                          ->with('success','Menu deleted successfully');
     }
 }
