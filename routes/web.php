@@ -41,7 +41,7 @@ use App\Http\Controllers\KategoriController;
 
 Route::get('/kategori', [KategoriController::class, 'index']);
 
-//untuk tambah data kategori 
+//untuk tambah data kategori
 Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
 Route::post('/kategori', [KategoriController::class, 'store'])->name('kategori.store');
 
@@ -90,5 +90,16 @@ Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update
 //untuk delete data
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
+//==============================================================================================================//
+
+use App\Http\Controllers\PemesananController;
+
+Route::get('/pemesanan', [PemesananController::class, 'index'])->name('pemesanan.index');
+
+Route::get('/pemesanan/create', [PemesananController::class, 'create'])->name('pemesanan.create');
+Route::post('/pemesanan', [PemesananController::class, 'store'])->name('pemesanan.store');
+Route::get('/pemesanan/{id}/edit', [PemesananController::class, 'edit'])->name('pemesanan.edit');
+Route::put('/pemesanan/{id}', [PemesananController::class, 'update'])->name('pemesanan.update');
+Route::delete('/pemesanan/{id}', [PemesananController::class, 'destroy'])->name('pemesanan.destroy');
 
 
