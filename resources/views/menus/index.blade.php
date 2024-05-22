@@ -5,7 +5,7 @@
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <h3 align="center">Daftar Menu</h3>
-                <a href="{{ route('menus.create') }}" class="btn btn-primary mb-6">Tambah Menu</a>
+                <a href="{{ route('menus.create') }}" class="btn btn-primary mb-6">Add Menu</a>
                 <br></br>
                 <thead>
                     <tr>
@@ -52,5 +52,5 @@
     </div>
 </div>
 
-            
+
 @include('layouts.footer')

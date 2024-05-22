@@ -6,7 +6,7 @@
             <table class="table table-bordered" width="100%" cellspacing="0">
                     <h3 class="text-center">Data Meja</h3>
                     <div>
-                        <a href="{{ route('meja.create') }}" class="btn btn-primary mb-3">Tambah Data Meja</a>
+                        <a href="{{ route('meja.create') }}" class="btn btn-primary mb-3">Add Table</a>
                     </div>
                 <thead>
                     <tr>
@@ -29,7 +29,7 @@
                             <form method="POST" action="{{ route('meja.destroy', $meja->meja_id) }}" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Anda yakin ingin menghapus data meja ini?')">Hapus</button>
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Anda yakin ingin menghapus data meja ini?')">Delete</button>
                             </form>
                         </td>
                     </tr>
