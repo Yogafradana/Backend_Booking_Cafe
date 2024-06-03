@@ -8,27 +8,25 @@ use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
-    //controller menampilkan data menu
-    public function index()
+    // Controller menampilkan data menu
+    public function index(Request $request)
     {
-        // Menggunakan Eloquent untuk ambil data Menu
-        $menus = Menu::join('kategori', 'menu.id_kategori', '=', 'kategori.id_kategori')
-            ->select('menu.nama_menu', 'kategori.nama_kategori as kategori', 'menu.deskripsi', 'menu.harga', 'menu.gambar', 'menu.stok')
-            ->get();
-
-        // Jika Anda juga perlu semua data Kategori, Anda bisa ambil dengan Eloquent
+        // Ambil data kategori
         $categories = Kategori::all();
-        $menus = Menu::all();
+
+        // Ambil data menu dan filter berdasarkan kategori jika ada
+        $menus = Menu::join('kategori', 'menu.id_kategori', '=', 'kategori.id_kategori')
+            ->select('menu.menu_id', 'menu.nama_menu', 'kategori.nama_kategori as kategori', 'menu.deskripsi', 'menu.harga', 'menu.gambar', 'menu.stok');
+
+        if ($request->has('kategori') && $request->kategori != '') {
+            $menus->where('menu.id_kategori', $request->kategori);
+        }
+
+        $menus = $menus->get();
 
         // Kirimkan data ke view
         return view('menus.index', compact('menus', 'categories'));
     }
-
-    // public function index2()
-    // {
-    //     $menus = Menu::all();
-    //     return view('menus.index', compact('menus'));
-    // }
 
     public function create()
     {
@@ -40,7 +38,7 @@ class MenuController extends Controller
     {
         $request->validate([
             'nama_menu' => 'required',
-            'id_kategori' => 'required|exists:kategori,id_kategori', // Validasi id_kategori yang ada di tabel Kategori
+            'id_kategori' => 'required|exists:kategori,id_kategori',
             'deskripsi' => 'required',
             'harga' => 'required|numeric',
             'gambar' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -68,50 +66,50 @@ class MenuController extends Controller
         return redirect()->route('menus.index')->with('success', 'Menu berhasil ditambahkan');
     }
 
-    //controller edit data menu
     public function edit(Menu $menu)
-{
-    $categories = Kategori::all();
-    return view('menus.edit', compact('menu', 'categories'));
-}
-    public function update(Request $request, Menu $menu)
-{
-    $request->validate([
-        'nama_menu' => 'required',
-        'id_kategori' => 'required',
-        'deskripsi' => 'required',
-        'harga' => 'required|numeric',
-        'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-        'stok' => 'required',
-    ]);
-
-    // Upload gambar jika ada
-    if ($request->hasFile('gambar')) {
-        $gambar = $request->file('gambar');
-        $nama_gambar = time() . '_' . $gambar->getClientOriginalName();
-        $gambar->move(public_path('images'), $nama_gambar);
-    } else {
-        $nama_gambar = $menu->gambar;
+    {
+        $categories = Kategori::all();
+        return view('menus.edit', compact('menu', 'categories'));
     }
 
-    // Update data menu
-    $menu->nama_menu = $request->nama_menu;
-    $menu->id_kategori = $request->id_kategori;
-    $menu->deskripsi = $request->deskripsi;
-    $menu->harga = $request->harga;
-    $menu->gambar = $nama_gambar;
-    $menu->stok = $request->stok;
-    $menu->save();
+    public function update(Request $request, Menu $menu)
+    {
+        $request->validate([
+            'nama_menu' => 'required',
+            'id_kategori' => 'required|exists:kategori,id_kategori',
+            'deskripsi' => 'required',
+            'harga' => 'required|numeric',
+            'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'stok' => 'required',
+        ]);
 
-    return redirect()->route('menus.index')->with('success', 'Menu berhasil diperbarui');
-}
+        // Upload gambar jika ada
+        if ($request->hasFile('gambar')) {
+            $gambar = $request->file('gambar');
+            $nama_gambar = time() . '_' . $gambar->getClientOriginalName();
+            $gambar->move(public_path('images'), $nama_gambar);
+            $menu->gambar = $nama_gambar;
+        } else {
+            $nama_gambar = $menu->gambar;
+        }
 
-    // controller delete data menu
+        // Update data menu
+        $menu->nama_menu = $request->nama_menu;
+        $menu->id_kategori = $request->id_kategori;
+        $menu->deskripsi = $request->deskripsi;
+        $menu->harga = $request->harga;
+        $menu->gambar = $nama_gambar;
+        $menu->stok = $request->stok;
+        $menu->save();
+
+        return redirect()->route('menus.index')->with('success', 'Menu berhasil diperbarui');
+    }
+
     public function destroy(Menu $menu)
     {
         $menu->delete();
 
         return redirect()->route('menus.index')
-                         ->with('success','Menu deleted successfully');
+                         ->with('success', 'Menu deleted successfully');
     }
 }

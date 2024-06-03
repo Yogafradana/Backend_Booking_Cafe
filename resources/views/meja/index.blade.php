@@ -6,9 +6,9 @@
             <table class="table table-bordered" width="100%" cellspacing="0">
                     <h3 class="text-center">Data Meja</h3>
                     <div>
-                        <a href="{{ route('meja.create') }}" class="btn btn-primary mb-3">Add Table</a>
+                        <a href="{{ route('meja.create') }}" class="btn-brown">Add Table</a>
                     </div>
-                <thead>
+                <thead class="thead">
                     <tr>
                         <th>ID</th>
                         <th>Nomor Meja</th>

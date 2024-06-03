@@ -6,9 +6,9 @@
             <table class="table table-bordered" width="100%" cellspacing="0">
                     <h3 class="text-center">Data Kategori</h3>
                 <div class="mb-3">
-                    <a href="{{ route('kategori.create') }}" class="btn btn-primary">Add Category</a>
+                    <a href="{{ route('kategori.create') }}" class="btn-brown">Add Category</a>
                 </div>
-                <thead>
+                <thead class="thead">
                     <tr>
                         <th>ID</th>
                         <th>Nama Kategori</th>

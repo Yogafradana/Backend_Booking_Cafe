@@ -22,6 +22,16 @@ class Menu extends Model
     {
         return $this->belongsTo(Kategori::class, 'id_kategori');
     }
+
+    public function reduceStock($quantity)
+    {
+        if ($this->stok >= $quantity) {
+            $this->stok -= $quantity;
+            $this->save();
+            return true;
+        }
+        return false;
+    }
 }
 
 

@@ -6,9 +6,9 @@
             <table class="table table-bordered" width="100%" cellspacing="0">
                 <h3 class="text-center">Data Users</h3>
                 <div>
-                    <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Add User</a>
+                    <a href="{{ route('users.create') }}" class="btn-brown">Add User</a>
                 </div>
-                <thead>
+                <thead class="thead">
                     <tr>
                         <th>ID</th>
                         <th>Name</th>

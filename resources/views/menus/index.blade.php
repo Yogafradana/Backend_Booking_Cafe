@@ -3,11 +3,24 @@
 <div class="card shadow">
     <div class="card-body">
         <div class="table-responsive">
+            <h3 align="center">Daftar Menu</h3>
+            <div class="d-flex justify-content-between mb-3">
+                <a href="{{ route('menus.create') }}" class="btn-brown">Add Menu</a>
+                <div>
+                    <form id="filterForm" method="GET" action="{{ route('menus.index') }}">
+                        <select id="categoryFilter" name="kategori" class="form-select" onchange="document.getElementById('filterForm').submit();">
+                            <option value="">Semua</option>
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id_kategori }}" {{ request('kategori') == $category->id_kategori ? 'selected' : '' }}>
+                                    {{ $category->nama_kategori }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </form>
+                </div>
+            </div>
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <h3 align="center">Daftar Menu</h3>
-                <a href="{{ route('menus.create') }}" class="btn btn-primary mb-6">Add Menu</a>
-                <br></br>
-                <thead>
+                <thead class="thead">
                     <tr>
                         <th>Nama Menu</th>
                         <th>Kategori</th>
@@ -18,17 +31,11 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="menuTableBody">
                     @foreach($menus as $menu)
                     <tr>
                         <td>{{ $menu->nama_menu }}</td>
-                        <td>
-                            @if ($menu->kategori)
-                                {{ $menu->kategori->nama_kategori }}
-                            @else
-                                Kategori tidak ditemukan
-                            @endif
-                        </td>
+                        <td>{{ $menu->kategori }}</td>
                         <td>{{ $menu->deskripsi }}</td>
                         <td>Rp {{ $menu->harga }}</td>
                         <td>
@@ -51,6 +58,5 @@
         </div>
     </div>
 </div>
-
 
 @include('layouts.footer')

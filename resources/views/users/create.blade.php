@@ -1,89 +1,134 @@
+@include('layouts.sidebar')
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambah Pengguna Baru</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
 
-    <!-- Bootstrap core CSS-->
-    <link href="{{ url('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
 
-    <!-- Custom fonts for this template-->
-    <link href="{{ url('assets/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+        .form-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
 
-    <!-- Custom styles for this template-->
-    <link href="{{ url('assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
+        .column {
+            width: 48%;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-group-button {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .form-group-button button,
+        .form-group-button a {
+            margin-left: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .form-group-button button.submit {
+            background-color: brown;
+            color: white;
+        }
+
+        .form-group-button a.cancel {
+            background-color: #ccc;
+            color: black;
+        }
+    </style>
 </head>
 
-<body class="bg-gradient-primary">
-
+<body>
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-xl-5 col-lg-12 col-md-9">
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <div class="row">
-
-                            <div class="col-lg-12">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Tambah User</h1>
-                                    </div>
-                                    <form class="user" method="POST" action="{{ route('users.store') }}">
-                                        @csrf
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="name" name="name" placeholder="Nama">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="telepon" name="telepon" placeholder="Telepon">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control form-control-user" id="alamat" name="alamat" placeholder="Alamat">
-                                        </div>
-                                        <div class="form-group">
-                                            <select class="form-control form-control-user" id="role" name="role" placeholder="role">
-                                                <option value="admin">Admin</option>
-                                                <option value="pembeli">Pembeli</option>
-                                            </select>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <a href="{{ route('users.index') }}" class="btn btn-secondary btn-user btn-block">Kembali</a>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <button type="submit" class="btn btn-primary btn-user btn-block">Tambah</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+        <form class="user" method="POST" action="{{ route('users.store') }}" style="width: 100%;">
+            @csrf
+            <div class="form-container">
+                <div class="column">
+                    <div class="form-group">
+                        <label for="name">Nama</label>
+                        <input type="text" id="name" name="name" placeholder="Nama" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Password" required>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="form-group">
+                        <label for="telepon">Telepon</label>
+                        <input type="text" id="telepon" name="telepon" placeholder="Telepon" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="alamat">Alamat</label>
+                        <input type="text" id="alamat" name="alamat" placeholder="Alamat" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="role">Role</label>
+                        <select id="role" name="role" required>
+                            <option value="admin">Admin</option>
+                            <option value="pembeli">Pembeli</option>
+                        </select>
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="form-group-button">
+                <a href="{{ route('users.index') }}" class="cancel">Cancel</a>
+                <button type="submit" class="submit">Submit</button>
+            </div>
+        </form>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ url('assets/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ url('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="{{ url('assets/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{ url('assets/js/sb-admin-2.min.js') }}"></script>
+@include('layouts.footer')
 </body>
 
 </html>

@@ -17,6 +17,12 @@ class Pemesanan extends Model
         'nama_pengunjung', 'meja_id', 'menu_id', 'jumlah', 'subtotal', 'tanggal_pemesanan', 'status'
     ];
 
+
+    public function detailPemesanans()
+    {
+        return $this->hasMany(DetailPemesanan::class);
+    }
+
     public function menu()
     {
         return $this->belongsTo(Menu::class, 'menu_id', 'menu_id');

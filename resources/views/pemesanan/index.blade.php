@@ -2,20 +2,17 @@
 
 <div class="card shadow">
     <div class="card-body">
-        <div class="table-responsive">
+        <h3 class="text-center">Data Pemesanan</h3>
+        <div>
+            <a href="{{ route('pemesanan.create') }}" class="btn-brown">Add Orders</a>
+        </div>
+        <div class="table-responsive" style="overflow-x: auto; max-height: 500px;">
             <table class="table table-bordered" width="100%" cellspacing="0">
-                <h3 class="text-center">Data Pemesanan</h3>
-                <div>
-                    <a href="{{ route('pemesanan.create') }}" class="btn btn-primary mb-3">Add Orders</a>
-                </div>
-                <thead>
+                <thead class="thead">
                     <tr>
                         <th>ID</th>
                         <th>Nama Pengunjung</th>
                         <th>Meja</th>
-                        <th>Menu</th>
-                        <th>Jumlah</th>
-                        <th>Subtotal</th>
                         <th>Tanggal Pemesanan</th>
                         <th>Status</th>
                         <th>Action</th>
@@ -28,9 +25,6 @@
                             <td>{{ $pemesanan->pemesanan_id }}</td>
                             <td>{{ $pemesanan->nama_pengunjung }}</td>
                             <td>{{ $pemesanan->meja_id }}</td>
-                            <td>{{ $pemesanan->menu_id }}</td>
-                            <td>{{ $pemesanan->jumlah }}</td>
-                            <td>{{ $pemesanan->subtotal }}</td>
                             <td>{{ $pemesanan->tanggal_pemesanan }}</td>
                             <td>{{ $pemesanan->status }}</td>
                             <td>
@@ -40,7 +34,6 @@
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Anda yakin ingin menghapus pemesanan ini?')">Delete</button>
                                 </form>
-
                             </td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-info">Detail</a>

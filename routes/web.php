@@ -97,9 +97,22 @@ use App\Http\Controllers\PemesananController;
 Route::get('/pemesanan', [PemesananController::class, 'index'])->name('pemesanan.index');
 
 Route::get('/pemesanan/create', [PemesananController::class, 'create'])->name('pemesanan.create');
-Route::post('/pemesanan', [PemesananController::class, 'store'])->name('pemesanan.store');
+Route::post('/pemesanan', [PemesananController::class, 'store'])->name('pemesanans.store');
 Route::get('/pemesanan/{id}/edit', [PemesananController::class, 'edit'])->name('pemesanan.edit');
 Route::put('/pemesanan/{id}', [PemesananController::class, 'update'])->name('pemesanan.update');
 Route::delete('/pemesanan/{id}', [PemesananController::class, 'destroy'])->name('pemesanan.destroy');
 
+//==============================================================================================================//
+
+use App\Http\Controllers\ReviewController;
+
+Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+Route::get('/reviews/{id}', [ReviewController::class, 'show'])->name('reviews.show');
+
+//==============================================================================================================//
+//Route Dashboard
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+
+//==============================================================================================================//
 

@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Menu; 
+use App\Models\Menu;
+use App\Models\User;
+use App\Models\Kategori;
+use App\Models\Pemesanan;
+use App\Models\Review;
+use App\Models\Meja;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -16,11 +21,17 @@ class HomeController extends Controller
     {
         $this->middleware('auth');
     }
-    
-    //controller unutk menampilkan menu ==> By Frada
+
+    // Controller untuk menampilkan menu ==> By Frada
     public function index()
     {
         $menus = Menu::all();
-        return view('home', compact('menus'));
+        $totalPemesanan = Pemesanan::count(); // Menghitung jumlah pemesanan
+        $totalUsers = User::count(); // Menghitung jumlah pengguna
+        $totalMenu = Menu::count();
+        $totalKategori = Kategori::count();
+        $totalMeja = Meja::count();
+        $totalUlasan = Review::count();
+        return view('home', compact('menus', 'totalPemesanan', 'totalUsers', 'totalMenu', 'totalKategori','totalMeja', 'totalUlasan'));
     }
 }
