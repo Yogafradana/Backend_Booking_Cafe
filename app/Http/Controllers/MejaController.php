@@ -51,16 +51,20 @@ class MejaController extends Controller
     }
 
     //delete data meja
-    public function destroy($meja_id)
+    public function destroy($id)
     {
-        $meja = Meja::find($meja_id);
-        
-        if (!$meja) {
-            return redirect()->route('meja.index')->with('error', 'Data meja tidak ditemukan.');
-        }
-        
-        $meja->delete();
+        try {
+            $meja = Meja::findOrFail($id);
 
-        return redirect()->route('meja.index')->with('success', 'Data meja berhasil dihapus.');
+            if ($meja->status === 'dipesan') {
+                return redirect()->back()->withErrors(['error' => 'Upss, tidak bisa menghapus meja karena statusnya saat ini dipesan.']);
+            }
+
+            $meja->delete();
+
+            return redirect()->route('meja.index')->with('success', 'Meja berhasil dihapus.');
+        } catch (QueryException $e) {
+            return redirect()->back()->withErrors(['error' => 'Failed to delete: ' . $e->getMessage()]);
+        }
     }
 }

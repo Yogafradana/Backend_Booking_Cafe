@@ -32,6 +32,12 @@ class Menu extends Model
         }
         return false;
     }
+
+    //relasi ke tabel detail pemesanan
+    public function detailPemesanans()
+    {
+        return $this->hasMany(DetailPemesanan::class, 'menu_id');
+    }
 }
 
 

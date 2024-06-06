@@ -1,110 +1,116 @@
-@extends('layouts.app')
+@include('layouts.sidebar')
 
 @section('content')
 <div class="container">
-    <h1>Buat Pemesanan</h1>
+    <h2>Buat Pemesanan Baru</h2>
 
-    @if ($errors->any())
+    @if($errors->any())
         <div class="alert alert-danger">
             <ul>
-                @foreach ($errors->all() as $error)
+                @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
             </ul>
         </div>
     @endif
 
-    <form action="{{ route('pemesanans.store') }}" method="POST">
+    <form action="{{ route('pemesanan.store') }}" method="POST">
         @csrf
         <div class="form-group">
-            <label for="nama_pengunjung">Nama Pengunjung</label>
-            <input type="text" name="nama_pengunjung" class="form-control" value="{{ old('nama_pengunjung') }}">
+            <label for="nama_pengunjung">Nama Pengunjung:</label>
+            <input type="text" class="form-control" id="nama_pengunjung" name="nama_pengunjung" value="{{ old('nama_pengunjung') }}" required>
         </div>
+
         <div class="form-group">
-            <label for="meja_id">Meja</label>
-            <select name="meja_id" class="form-control">
-                <option value="">Pilih Meja</option>
-                @foreach ($mejas as $meja)
-                    <option value="{{ $meja->id }}" {{ old('meja_id') == $meja->id ? 'selected' : '' }}>{{ $meja->nomor_meja }}</option>
+            <label for="meja_id">Pilih Meja:</label>
+            <select class="form-control" id="meja_id" name="meja_id" required>
+                @foreach($mejas as $meja)
+                    <option value="{{ $meja->meja_id }}">{{ $meja->nomor_meja }} (Kapasitas: {{ $meja->kapasitas }})</option>
                 @endforeach
             </select>
         </div>
-        <div class="form-group">
-            <label for="keterangan">Keterangan</label>
-            <textarea name="keterangan" class="form-control">{{ old('keterangan') }}</textarea>
+
+        <h4>Detail Pemesanan</h4>
+        <div id="menu-items">
+            <div class="menu-item form-group">
+                <label for="menu[0][menu_id]">Pilih Menu:</label>
+                <select class="form-control menu-select" name="menu[0][menu_id]" required>
+                    @foreach($menus as $menu)
+                        <option value="{{ $menu->menu_id }}" data-harga="{{ $menu->harga }}">{{ $menu->nama_menu }} (Stok: {{ $menu->stok }}) - Rp{{ number_format($menu->harga, 0, ',', '.') }}</option>
+                    @endforeach
+                </select>
+
+                <label for="menu[0][jumlah]">Jumlah:</label>
+                <input type="number" class="form-control jumlah-input" name="menu[0][jumlah]" value="1" required>
+
+                <label for="menu[0][subtotal]">Subtotal:</label>
+                <input type="number" class="form-control subtotal-input" name="menu[0][subtotal]" value="0" required readonly>
+
+                <label for="menu[0][keterangan]">Keterangan:</label>
+                <textarea class="form-control" name="menu[0][keterangan]"></textarea>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="menu">Menu</label>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Nama Menu</th>
-                        <th>Harga</th>
-                        <th>Jumlah</th>
-                        <th>Subtotal</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="dynamic-table">
-                    <tr>
-                        <td>
-                            <select name="menu[0][menu_id]" class="form-control" onchange="hitungSubtotal(this)">
-                                <option value="">Pilih Menu</option>
-                                @foreach ($menus as $menu)
-                                    <option value="{{ $menu->id }}" data-harga="{{ $menu->harga }}" {{ old('menu.0.menu_id') == $menu->id ? 'selected' : '' }}>{{ $menu->nama_menu }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td><input type="text" name="menu[0][harga]" class="form-control" readonly value="{{ old('menu.0.harga') }}"></td>
-                        <td><input type="number" name="menu[0][jumlah]" class="form-control" value="{{ old('menu.0.jumlah') }}" onchange="hitungSubtotal(this)"></td>
-                        <td><input type="text" name="menu[0][subtotal]" class="form-control" readonly value="{{ old('menu.0.subtotal') }}"></td>
-                        <td><button type="button" class="btn btn-danger" onclick="hapusBaris(this)">Hapus</button></td>
-                    </tr>
-                </tbody>
-            </table>
-            <button type="button" class="btn btn-primary" onclick="tambahBaris()">Tambah Menu</button>
-        </div>
-        <button type="submit" class="btn btn-success">Simpan</button>
+        <button type="button" id="add-menu-item" class="btn btn-secondary">Tambah Menu</button>
+
+        <button type="submit" class="btn btn-primary">Buat Pemesanan</button>
     </form>
 </div>
 
 <script>
-    let index = 0;
+document.getElementById('add-menu-item').addEventListener('click', function() {
+    var menuItems = document.getElementById('menu-items');
+    var newIndex = menuItems.children.length;
+    var newItem = document.createElement('div');
+    newItem.classList.add('menu-item', 'form-group');
 
-    function tambahBaris() {
-        index++;
-        const row = `
-            <tr>
-                <td>
-                    <select name="menu[${index}][menu_id]" class="form-control" onchange="hitungSubtotal(this)">
-                        <option value="">Pilih Menu</option>
-                        @foreach ($menus as $menu)
-                            <option value="{{ $menu->id }}" data-harga="{{ $menu->harga }}">{{ $menu->nama_menu }}</option>
-                        @endforeach
-                    </select>
-                </td>
-                <td><input type="text" name="menu[${index}][harga]" class="form-control" readonly></td>
-                <td><input type="number" name="menu[${index}][jumlah]" class="form-control" onchange="hitungSubtotal(this)"></td>
-                <td><input type="text" name="menu[${index}][subtotal]" class="form-control" readonly></td>
-                <td><button type="button" class="btn btn-danger" onclick="hapusBaris(this)">Hapus</button></td>
-            </tr>
-        `;
-        document.getElementById('dynamic-table').insertAdjacentHTML('beforeend', row);
-    }
+    newItem.innerHTML = `
+        <label for="menu[${newIndex}][menu_id]">Pilih Menu:</label>
+        <select class="form-control menu-select" name="menu[${newIndex}][menu_id]" required>
+            @foreach($menus as $menu)
+                <option value="{{ $menu->menu_id }}" data-harga="{{ $menu->harga }}">{{ $menu->nama_menu }} (Stok: {{ $menu->stok }}) - Rp{{ number_format($menu->harga, 0, ',', '.') }}</option>
+            @endforeach
+        </select>
 
-    function hapusBaris(button) {
-        button.closest('tr').remove();
-    }
+        <label for="menu[${newIndex}][jumlah]">Jumlah:</label>
+        <input type="number" class="form-control jumlah-input" name="menu[${newIndex}][jumlah]" value="1" required>
 
-    function hitungSubtotal(element) {
-        const index = element.parentNode.parentNode.rowIndex - 1; // mendapatkan index baris
-        const harga = element.options[element.selectedIndex].getAttribute('data-harga');
-        const jumlah = document.querySelector(`input[name="menu[${index}][jumlah]"]`).value;
-        const subtotal = harga * jumlah;
+        <label for="menu[${newIndex}][subtotal]">Subtotal:</label>
+        <input type="number" class="form-control subtotal-input" name="menu[${newIndex}][subtotal]" value="0" required readonly>
 
-        document.querySelector(`input[name="menu[${index}][harga]"]`).value = harga;
-        document.querySelector(`input[name="menu[${index}][subtotal]"]`).value = subtotal;
-    }
+        <label for="menu[${newIndex}][keterangan]">Keterangan:</label>
+        <textarea class="form-control" name="menu[${newIndex}][keterangan]"></textarea>
+    `;
+
+    menuItems.appendChild(newItem);
+    addEventListeners(newItem);
+});
+
+function updateSubtotal(menuItem) {
+    var harga = parseFloat(menuItem.querySelector('.menu-select option:checked').getAttribute('data-harga'));
+    var jumlah = parseInt(menuItem.querySelector('.jumlah-input').value);
+    var subtotal = harga * jumlah;
+    menuItem.querySelector('.subtotal-input').value = subtotal;
+}
+
+function addEventListeners(menuItem) {
+    var select = menuItem.querySelector('.menu-select');
+    var jumlahInput = menuItem.querySelector('.jumlah-input');
+
+    select.addEventListener('change', function() {
+        updateSubtotal(menuItem);
+    });
+
+    jumlahInput.addEventListener('input', function() {
+        updateSubtotal(menuItem);
+    });
+
+    // Initialize subtotal for new item
+    updateSubtotal(menuItem);
+}
+
+// Add event listeners for the first menu item
+document.querySelectorAll('.menu-item').forEach(function(menuItem) {
+    addEventListeners(menuItem);
+});
 </script>
-
-@endsection
+@include('layouts.footer')

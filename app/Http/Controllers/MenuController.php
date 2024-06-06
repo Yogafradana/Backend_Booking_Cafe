@@ -8,10 +8,8 @@ use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
-    // Controller menampilkan data menu
     public function index(Request $request)
     {
-        // Ambil data kategori
         $categories = Kategori::all();
 
         // Ambil data menu dan filter berdasarkan kategori jika ada
@@ -21,10 +19,7 @@ class MenuController extends Controller
         if ($request->has('kategori') && $request->kategori != '') {
             $menus->where('menu.id_kategori', $request->kategori);
         }
-
         $menus = $menus->get();
-
-        // Kirimkan data ke view
         return view('menus.index', compact('menus', 'categories'));
     }
 
@@ -105,11 +100,20 @@ class MenuController extends Controller
         return redirect()->route('menus.index')->with('success', 'Menu berhasil diperbarui');
     }
 
-    public function destroy(Menu $menu)
+    public function destroy($id)
     {
-        $menu->delete();
+        try {
+            $menu = Menu::findOrFail($id);
 
-        return redirect()->route('menus.index')
-                         ->with('success', 'Menu deleted successfully');
+            if ($menu->detailPemesanans()->exists()) {
+                return redirect()->back()->withErrors(['error' => 'Upss, tidak bisa menghapus menu karena masih ada pemesanan yang menggunakan menu ini.']);
+            }
+
+            $menu->delete();
+
+            return redirect()->route('menus.index')->with('success', 'Menu berhasil dihapus.');
+        } catch (QueryException $e) {
+            return redirect()->back()->withErrors(['error' => 'Failed to delete: ' . $e->getMessage()]);
+        }
     }
 }

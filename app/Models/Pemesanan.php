@@ -7,31 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pemesanan extends Model
 {
-
     use HasFactory;
 
     protected $primaryKey = 'pemesanan_id';
     protected $table = 'pemesanan';
 
     protected $fillable = [
-        'nama_pengunjung', 'meja_id', 'menu_id', 'jumlah', 'subtotal', 'tanggal_pemesanan', 'status'
+        'nama_pengunjung', 'meja_id', 'tanggal_pemesanan', 'status', 'keterangan'
     ];
-
 
     public function detailPemesanans()
     {
-        return $this->hasMany(DetailPemesanan::class);
-    }
-
-    public function menu()
-    {
-        return $this->belongsTo(Menu::class, 'menu_id', 'menu_id');
+        return $this->hasMany(DetailPemesanan::class, 'pemesanan_id');
     }
 
     public function meja()
     {
-        return $this->belongsTo(Meja::class, 'meja_id', 'meja_id');
+        return $this->belongsTo(Meja::class, 'meja_id');
     }
 
-     public $timestamps = false;
+    public $timestamps = false;
 }

@@ -10,4 +10,10 @@ class Meja extends Model
     protected $table = 'Meja'; //Nama tabel
     protected $primaryKey = 'meja_id';
     protected $fillable = ['nomor_meja', 'kapasitas', 'status']; // Nama atribut pada tabael meja
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+        $this->save();
+    }
 }
