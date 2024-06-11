@@ -28,21 +28,31 @@
     }
 
      .btn-brown {
-        background-color: #A86227; /* Warna cokelat */
+        background-color: #A86227;
         border-color: #A86227;
-        color: white; /* Warna teks */
-        padding: 10px 20px; /* Ukuran tombol lebih besar */
-        font-size: 16px; /* Ukuran teks lebih besar */
-        border-radius: 5px; /* Membuat sudut membulat */
-        text-align: center; /* Mengatur teks di tengah */
-        text-decoration: none; /* Menghapus garis bawah */
-        display: inline-block; /* Membuat tombol terlihat inline */
+        color: white;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
         margin-bottom: 10px;
     }
 
     .btn-brown:hover {
         background-color: #A0522D; /* Warna cokelat sedikit lebih terang untuk efek hover */
         border-color: #A0522D;
+    }
+
+    .nav-link.active {
+            background-color: #A86227;
+            border-radius: 12px;
+            height: 45px;
+            padding-top:5px;
+            padding: 70px 30px;
+            /* Adjust padding to make it more compact */
+            line-height: 1.5;
     }
 
     .border-brown {
@@ -57,6 +67,18 @@
     .thead{
         position: sticky;
     }
+
+    .span{
+        color:black;
+    }
+
+    .navbar-nav {
+    display: flex;
+    flex-direction: column;
+    padding-left: 0px;
+    margin-bottom: 0;
+    list-style: none;
+}
 
     .form-container {
             display: flex;
@@ -98,36 +120,36 @@ $(document).ready(function() {
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
                 <div class="sidebar-brand-text mx-3">
-                    <img src="assets/img/logo.png" alt="Logo" style="height: 60px; width: auto; margin-right: 10px;">
+                    <img src="{{ asset('assets/img/logo.png') }}" alt="Logo" style="height: 60px; width: auto; margin-right: 10px;">
                 </div>
             </a>
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
-                <a class="nav-link" href="{{ route('home') }}">
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('home') ? 'active' : '' }}" href="{{ route('home') }}">
                     <i class="fas fa-laptop text-gray-300"></i>
-                    <span style="color: Black">Dashboard</span></a>
+                    <span class="span">Dashboard</span></a>
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="{{ route('users.index') }}">
+                <a class="nav-link {{ Request::is('users') ? 'active' : '' }}" href="{{ route('users.index') }}">
                     <i class="fas fa-users fa-2x text-gray-300"></i>
                     <span style="color: Black">Users</span></a>
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="{{ route('menus.index') }}">
+                <a class="nav-link {{ Request::is('menus') ? 'active' : '' }}" href="{{ route('menus.index') }}">
                     <i class="fas fa-utensils fa-2x text-gray-300"></i>
                     <span style="color: Black">Menu</span></a>
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="{{ url('/pemesanan') }}">
+                <a class="nav-link {{ Request::is('pemesanan') ? 'active' : '' }}" href="{{ url('/pemesanan') }}">
                     <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
                     <span style="color: Black">Pesanan</span></a>
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link {{ Request::is('kategori') ? 'active bg-brown' : '' }}" href="{{ route('meja.index') }}">
+                <a class="nav-link {{ Request::is('meja') ? 'active' : '' }}" href="{{ route('meja.index') }}">
                     <i class="fas fa-chair fa-2x text-gray-300"></i>
                     <span style="color: Black">Meja</span>
                 </a>
@@ -135,13 +157,13 @@ $(document).ready(function() {
 
 
             <li class="nav-item active">
-                <a class="nav-link" href="{{ url('/kategori') }}">
+                <a class="nav-link {{ Request::is('kategori') ? 'active' : '' }}" href="{{ url('/kategori') }}">
                     <i class="fas fa-tags fa-2x text-gray-300"></i>
                     <span style="color: Black">Kategori</span></a>
             </li>
 
             <li class="nav-item active">
-                <a class="nav-link" href="{{ route('reviews.index') }}">
+                <a class="nav-link {{ Request::is('reviews') ? 'active' : '' }}" href="{{ route('reviews.index') }}">
                     <i class="fas fa-comment fa-2x text-gray-300"></i>
                     <span style="color: Black">Ulasan</span></a>
             </li>
@@ -156,26 +178,28 @@ $(document).ready(function() {
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-                    <ul>
-                        <!-- Nav Item - User Information -->
-                        <li class="nav-item dropdown no-arrow">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
-                                <img class="img-profile rounded-circle"
-                                    src="{{ url('assets/img/cafe.jpg') }}">
-                            </a>
-                            <!-- Dropdown - User Information -->
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="userDropdown">
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Logout
-                                </a>
-                            </div>
-                        </li>
-                    </ul>
-                </nav>
+
+    <!-- Topbar Navbar -->
+    <ul class="navbar-nav ml-auto">
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
+                <img class="img-profile rounded-circle" src="{{ url('assets/img/cafe.jpg') }}">
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                aria-labelledby="userDropdown">
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Logout
+                </a>
+            </div>
+        </li>
+    </ul>
+</nav>
+
     <body>
 </html>

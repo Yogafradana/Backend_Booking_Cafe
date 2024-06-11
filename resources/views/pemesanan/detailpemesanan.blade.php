@@ -46,12 +46,32 @@
     </style>
 </head>
 <body>
+     <form action="{{ route('pemesanan.updateStatus', $pemesanan->pemesanan_id) }}" method="POST" class="status-dropdown">
+            @csrf
+            @method('PUT')
     <div class="container">
-        <div class="detail-title">Detail Pesanan</div>
+        <div class="row">
+            <div class="col-md-6">
+                 <div class="detail-title">Detail Pesanan</div>
         <div class="detail-item"><strong>ID Pesanan :</strong> {{ $pemesanan->pemesanan_id }}</div>
         <div class="detail-item"><strong>Nama :</strong> {{ $pemesanan->nama_pengunjung }}</div>
         <div class="detail-item"><strong>Nomor Meja :</strong> {{ $pemesanan->meja->nomor_meja }}</div>
         <div class="detail-item"><strong>Waktu :</strong> {{ $pemesanan->tanggal_pemesanan }}</div>
+            </div>
+            <div class="col-md-6">
+
+            <label for="status"><strong>Status</strong></label>
+            <select {{ $pemesanan->status == 'selesai' ? 'disabled' : '' }} id="status" name="status" class="form-control">
+                <option value="pending" {{ $pemesanan->status == 'pending' ? 'selected' : '' }}>Pending</option>
+                <option value="proses" {{ $pemesanan->status == 'proses' ? 'selected' : '' }}>Pesanan sedang di proses</option>
+                <option value="selesai" {{ $pemesanan->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
+            </select>
+
+
+
+            </div>
+
+        </div>
 
         <div class="menu-item mt-4">
             <strong>Menu Pesanan</strong>
@@ -60,6 +80,7 @@
             <span>Jumlah</span>
             <span>Nama Menu</span>
             <span>Harga</span>
+            <span>Keterangan</span>
         </div>
         <hr />
         @foreach($pemesanan->detailPemesanans as $detail)
@@ -67,35 +88,22 @@
                 <span>{{ $detail->jumlah }}</span>
                 <span>{{ $detail->menu->nama_menu }}</span>
                 <span>Rp {{ number_format($detail->subtotal, 0, ',', '.') }}</span>
+                <span>{{ $detail->keterangan }}</span>
             </div>
         @endforeach
         <div class="total">
             <span>Total</span>
             <span>Rp {{ number_format($pemesanan->detailPemesanans->sum('subtotal'), 0, ',', '.') }}</span>
         </div>
-        <div class="detail-item"><strong>Keterangan :</strong> {{ $pemesanan->detailPemesanans->first()->keterangan ?? '-' }}</div>
-
-        <form action="{{ route('pemesanan.updateStatus', $pemesanan->pemesanan_id) }}" method="POST" class="status-dropdown">
-            @csrf
-            @method('PUT')
-            <label for="status"><strong>Status</strong></label>
-            <select id="status" name="status" class="form-control">
-                <option value="pending" {{ $pemesanan->status == 'pending' ? 'selected' : '' }}>Pending</option>
-                <option value="proses" {{ $pemesanan->status == 'proses' ? 'selected' : '' }}>Pesanan sedang di proses</option>
-                <option value="selesai" {{ $pemesanan->status == 'selesai' ? 'selected' : '' }}>Selesai</option>
-            </select>
-            <button type="submit" class="btn btn-save">Simpan</button>
-        </form>
 
         <div class="btn-custom">
             <a href="{{ route('pemesanan.index') }}" class="btn btn-back">Kembali</a>
-            <form action="{{ route('pemesanan.destroy', $pemesanan->pemesanan_id) }}" method="POST" style="display:inline-block;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus pemesanan ini?')">Hapus</button>
-            </form>
+            <button type="submit" class="btn btn-save">Simpan</button>
+
         </div>
     </div>
+      </form>
 </body>
+
 @include('layouts.footer')
 </html>

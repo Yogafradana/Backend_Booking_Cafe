@@ -18,11 +18,50 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ url('assets/css/sb-admin-2.min.css') }}" rel="stylesheet">
+    <style>
+        .button{
+            background-color: #A86227;
+            border-color: #A86227;
+            border-radius: 12px;
+            width: 100%;
+            height: 45px;
+            color: white;
+        }
+        .ha{
+            color: black;
+            margin-top: 60px;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+        .haha{
+            color: black;
+            margin-bottom: 50px;
+        }
+        .button:hover{
+            color: #fff;
+            background-color: #A86227;
+            border-color: #A86227;
+        }
+
+        form.user .form-control-user{
+            border-radius: 12px;
+            border-color: white;
+            background-color: white;
+        }
+
+        .footer{
+            text-align: center;
+            color: black;
+            font-size: 12px;
+            margin-bottom:20px;
+        }
+        .img-fluid{
+            height: 100%;
+        }
+    </style>
 </head>
 
-<body class="bg-gradient-primary">
-
-    <div class="container">
+<body>
         <div class="row justify-content-center">
             <div class="col-xl-10 col-lg-12 col-md-9">
                 <div class="card o-hidden border-0 shadow-lg my-5">
@@ -30,13 +69,14 @@
                         <!-- Nested Row within Card Body -->
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-block">
-                                <img src="{{ url('assets/img/cafe.jpg') }}" alt="Login Image" class="img-fluid">
+                                <img src="{{ url('assets/img/bg.png') }}" alt="Login Image" class="img-fluid">
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Admin XYZ Cafe</h1>
+                                    <div class="text-left">
+                                        <h1 class="ha">Login</h1>
+                                        <p class="haha">Please enter your Username and Password</p>
                                     </div>
                                     <form class="user" method="POST" action="{{ route('login') }}">
                                         @csrf
@@ -62,24 +102,20 @@
                                                 <label class="custom-control-label" for="customCheck">Remember Me</label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
+                                        <button type="submit" class="button">Login</button>
                                     </form>
                                     <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="{{ route('password.request') }}">Forgot Password?</a>
-                                    </div>
-                                    <div class="text-center">
-                                        <a class="small" href="{{ route('register') }}">Create an Account!</a>
-                                    </div>
                                 </div>
+                                <div>
+                                <footer class="footer">Copyright @ 2024 PKL-POLINELA-2024</footer>
                             </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
     <!-- Bootstrap core JavaScript-->
     <script src="{{ url('assets/vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ url('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

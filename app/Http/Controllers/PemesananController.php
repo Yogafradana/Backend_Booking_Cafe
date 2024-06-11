@@ -159,6 +159,7 @@ class PemesananController extends Controller
     public function show($id)
     {
         $pemesanan = Pemesanan::with('meja', 'detailPemesanans.menu')->findOrFail($id);
+        // dd($pemesanan);
         return view('pemesanan.detailpemesanan', compact('pemesanan'));
     }
 
